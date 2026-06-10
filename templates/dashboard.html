@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShieldAI Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+        }
+        .navbar {
+            background: #111;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #222;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ff88;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 40px;
+        }
+        .stat-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #00ff88;
+        }
+        .stat-label {
+            color: #888;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+        .section {
+            padding: 0 40px 40px;
+        }
+        .section h2 {
+            margin-bottom: 20px;
+            color: #00ff88;
+        }
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #111;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .log-table th {
+            background: #1a1a1a;
+            padding: 15px;
+            text-align: left;
+            color: #888;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+        .log-table td {
+            padding: 15px;
+            border-bottom: 1px solid #1a1a1a;
+            font-size: 14px;
+        }
+        .badge-blocked {
+            background: #ff000022;
+            color: #ff4444;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        .badge-allowed {
+            background: #00ff8822;
+            color: #00ff88;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        .refresh-btn {
+            background: #00ff88;
+            color: #000;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">🛡️ ShieldAI</div>
+        <button class="refresh-btn" onclick="loadStats()">Refresh Stats</button>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number" id="total-requests">0</div>
+            <div class="stat-label">Total Requests</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="bots-blocked">0</div>
+            <div class="stat-label">Bots Blocked</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="ips-blocked">0</div>
+            <div class="stat-label">IPs Blocked</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="humans-allowed">0</div>
+            <div class="stat-label">Humans Allowed</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Recent Activity</h2>
+        <table class="log-table">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>IP Address</th>
+                    <th>User Agent</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="logs-body">
+                <tr>
+                    <td colspan="4" style="text-align:center; color:#888">
+                        Loading...
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        async function loadStats() {
+            const res = await fetch('/api/stats');
+            const data = await res.json();
+
+            document.getElementById('total-requests').textContent = data.total_requests;
+            document.getElementById('bots-blocked').textContent = data.bots_blocked;
+            document.getElementById('ips-blocked').textContent = data.ips_blocked;
+            document.getElementById('humans-allowed').textContent = data.humans_allowed;
+
+            const tbody = document.getElementById('logs-body');
+            tbody.innerHTML = '';
+            data.recent_logs.forEach(log => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${log.time}</td>
+                        <td>${log.ip}</td>
+                        <td>${log.user_agent.substring(0, 40)}...</td>
+                        <td>
+                            <span class="${log.status === 'blocked' ? 'badge-blocked' : 'badge-allowed'}">
+                                ${log.status}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        loadStats();
+        setInterval(loadStats, 10000);
+    </script>
+</body>
+</html>
