@@ -60,7 +60,7 @@ def check_request():
     client_ip = request.remote_addr
     user_agent = request.headers.get("User-Agent", "")
     skip_paths = ["/block-ip", "/blocked-ips", "/challenge",
-                  "/verify-challenge", "/dashboard", "/api/stats"]
+                  "/verify-challenge", "/dashboard", "/api/stats", "/"]
     if request.path in skip_paths:
         return None
     if is_blocked_ip(client_ip):
@@ -77,6 +77,11 @@ def check_request():
         }), 403
     log_request(client_ip, user_agent, "allowed")
 
+@app.route("/")
+@limiter.limit("10 per minute")
+def home():
+    return render_template("index.html")
+
 @app.route("/dashboard")
 def dashboard():
     return render_template("dashboard.html")
@@ -89,14 +94,6 @@ def api_stats():
         "ips_blocked": len(BLOCKED_IPS),
         "humans_allowed": STATS["humans_allowed"],
         "recent_logs": REQUEST_LOGS[-10:]
-    })
-
-@app.route("/")
-@limiter.limit("10 per minute")
-def home():
-    return jsonify({
-        "message": "Welcome! You are human ✅",
-        "your_ip": request.remote_addr
     })
 
 @app.route("/about")
