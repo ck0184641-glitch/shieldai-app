@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShieldAI — Protect Your Website</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: #111;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #222;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ff88;
+        }
+        .nav-btn {
+            background: #00ff88;
+            color: #000;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 120px 40px;
+            background: linear-gradient(180deg, #0a0a0a 0%, #0d1f0d 100%);
+        }
+        .hero h1 {
+            font-size: 56px;
+            font-weight: bold;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+        .hero h1 span {
+            color: #00ff88;
+        }
+        .hero p {
+            font-size: 20px;
+            color: #888;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        .hero-btns {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+        .btn-primary {
+            background: #00ff88;
+            color: #000;
+            padding: 16px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            padding: 16px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            border: 1px solid #333;
+        }
+
+        /* FEATURES */
+        .features {
+            padding: 100px 60px;
+            background: #0d0d0d;
+        }
+        .features h2 {
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 60px;
+            color: #00ff88;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .feature-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+        .feature-card p {
+            color: #888;
+            line-height: 1.6;
+        }
+
+        /* PRICING */
+        .pricing {
+            padding: 100px 60px;
+            background: #0a0a0a;
+        }
+        .pricing h2 {
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 60px;
+            color: #00ff88;
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .pricing-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        .pricing-card.popular {
+            border-color: #00ff88;
+            position: relative;
+        }
+        .popular-badge {
+            background: #00ff88;
+            color: #000;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .pricing-card h3 {
+            font-size: 22px;
+            margin-bottom: 16px;
+        }
+        .price {
+            font-size: 48px;
+            font-weight: bold;
+            color: #00ff88;
+        }
+        .price span {
+            font-size: 16px;
+            color: #888;
+        }
+        .pricing-features {
+            list-style: none;
+            margin: 24px 0;
+            text-align: left;
+        }
+        .pricing-features li {
+            padding: 8px 0;
+            color: #888;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        .pricing-features li::before {
+            content: "✅ ";
+        }
+        .pricing-btn {
+            display: block;
+            background: #00ff88;
+            color: #000;
+            padding: 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 24px;
+        }
+
+        /* CTA */
+        .cta {
+            padding: 100px 60px;
+            text-align: center;
+            background: #0d1f0d;
+        }
+        .cta h2 {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        .cta p {
+            color: #888;
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+        .whatsapp-btn {
+            background: #25D366;
+            color: #fff;
+            padding: 18px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #111;
+            padding: 30px 60px;
+            text-align: center;
+            color: #888;
+            border-top: 1px solid #222;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <div class="logo">🛡️ ShieldAI</div>
+        <a href="/dashboard" class="nav-btn">Live Dashboard</a>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+        <h1>Protect Your Website From<br><span>AI Bots & Scrapers</span></h1>
+        <p>ShieldAI blocks AI crawlers, rate limits attackers, and gives you real-time visibility into who's visiting your site.</p>
+        <div class="hero-btns">
+            <a href="#pricing" class="btn-primary">Get Protected Today</a>
+            <a href="/dashboard" class="btn-secondary">View Live Demo</a>
+        </div>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="features">
+        <h2>Everything You Need</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>AI Bot Detection</h3>
+                <p>Automatically blocks known AI scrapers like GPTBot, ClaudeBot, Google-Extended and more.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Rate Limiting</h3>
+                <p>Stops attackers who send hundreds of requests per second to steal your content.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚫</div>
+                <h3>IP Blocking</h3>
+                <p>Permanently ban suspicious IP addresses with one click from your dashboard.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Auto Middleware</h3>
+                <p>Every page on your website is protected automatically — no extra setup needed.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Live Dashboard</h3>
+                <p>See exactly who is visiting your site in real time — humans vs bots.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🇰🇪</div>
+                <h3>Built for Kenya</h3>
+                <p>Local support, M-Pesa payments, and pricing affordable for Kenyan businesses.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRICING -->
+    <div class="pricing" id="pricing">
+        <h2>Simple Pricing</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Basic</h3>
+                <div class="price">2,500<span>/mo</span></div>
+                <ul class="pricing-features">
+                    <li>AI Bot Blocking</li>
+                    <li>Rate Limiting</li>
+                    <li>1 Website</li>
+                    <li>Email Support</li>
+                </ul>
+                <a href="https://wa.me/254117426087?text=Nataka%20ShieldAI%20Basic%20Plan" class="pricing-btn">Get Started</a>
+            </div>
+            <div class="pricing-card popular">
+                <div class="popular-badge">MOST POPULAR</div>
+                <h3>Pro</h3>
+                <div class="price">6,000<span>/mo</span></div>
+                <ul class="pricing-features">
+                    <li>Everything in Basic</li>
+                    <li>IP Blocking</li>
+                    <li>Live Dashboard</li>
+                    <li>3 Websites</li>
+                    <li>WhatsApp Support</li>
+                </ul>
+                <a href="https://wa.me/254117426087?text=Nataka%20ShieldAI%20Pro%20Plan" class="pricing-btn">Get Started</a>
+            </div>
+            <div class="pricing-card">
+                <h3>Enterprise</h3>
+                <div class="price">15,000<span>/mo</span></div>
+                <ul class="pricing-features">
+                    <li>Everything in Pro</li>
+                    <li>Custom Rules</li>
+                    <li>Unlimited Websites</li>
+                    <li>Priority Support</li>
+                    <li>Monthly Report</li>
+                </ul>
+                <a href="https://wa.me/254117426087?text=Nataka%20ShieldAI%20Enterprise%20Plan" class="pricing-btn">Get Started</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+        <h2>Ready to Protect Your Website?</h2>
+        <p>Join businesses across Kenya using ShieldAI to block AI scrapers.</p>
+        <a href="https://wa.me/254117426087?text=Nataka%20kujua%20zaidi%20kuhusu%20ShieldAI" class="whatsapp-btn">
+            💬 Chat on WhatsApp
+        </a>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>🛡️ ShieldAI — Built in Kenya 🇰🇪 | Contact: +254 117 426 087</p>
+    </footer>
+
+</body>
+</html>
